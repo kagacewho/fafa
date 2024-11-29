@@ -1,0 +1,91 @@
+import math
+import tkinter as tk
+from tkinter import messagebox
+
+# Определение функций
+def mult(a, b):
+    return a * b
+
+def summa(a, b):
+    return a + b
+
+def sub(a, b):
+    return a - b 
+
+def div(a, b):
+    if b == 0:
+        return "Ошибка: деление на ноль"
+    return a / b
+
+def pro(a, b):  # Нахождение процента
+    return (a / b) * 100
+
+def step(a, b):  # Возведение в степень
+    return a ** b
+
+def lg(a, b):  # Логарифм
+    return math.log(a, b)
+
+def separate(string: str, separator):
+    """Разделяет строку на два числа"""
+    try:
+        result = string.split(separator)
+        return [float(x) for x in result]
+    except ValueError:
+        return None
+
+# Основная функция для вычислений
+def calculate():
+    user_input = entry.get()  # Получаем ввод пользователя из текстового поля
+
+    try:
+        if "+" in user_input:
+            numbers = separate(user_input, "+")
+            result = summa(numbers[0], numbers[1])
+
+        elif "-" in user_input:
+            numbers = separate(user_input, "-")
+            result = sub(numbers[0], numbers[1])
+
+        elif "*" in user_input:
+            numbers = separate(user_input, "*")
+            result = mult(numbers[0], numbers[1])
+
+        elif "/" in user_input:
+            numbers = separate(user_input, "/")
+            result = div(numbers[0], numbers[1])
+
+        elif "%" in user_input:
+            numbers = separate(user_input, "%")
+            result = pro(numbers[0], numbers[1])
+
+        elif "**" in user_input:
+            numbers = separate(user_input, "**")
+            result = step(numbers[0], numbers[1])
+
+        elif "log" in user_input:
+            numbers = separate(user_input, "log")
+            result = lg(numbers[0], numbers[1])
+
+        else:
+            result = "Неправильный ввод"
+
+        # Показываем результат в окне
+        messagebox.showinfo("Результат", f"Результат: {result}")
+    except Exception as e:
+        messagebox.showerror("Ошибка", f"Произошла ошибка: {e}")
+
+# Создание графического интерфейса
+root = tk.Tk()
+root.title("Калькулятор")
+
+# Поле ввода
+entry = tk.Entry(root, width=30, font=("Arial", 14))
+entry.pack(pady=10)
+
+# Кнопка "Вычислить"
+button = tk.Button(root, text="Вычислить", command=calculate, font=("Arial", 14))
+button.pack(pady=10)
+
+# Запуск приложения
+root.mainloop()
