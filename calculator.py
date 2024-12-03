@@ -40,6 +40,56 @@ elif "/" in user_input:
 else:
     print('Не правильный ввод')
 
+def mult(a, b):
+    return a * b
+
+def summa(a, b):
+    return a + b
+
+def sub(a, b):
+    return a - b 
+
+def div(a, b):
+    if b == 0:
+        return "Ошибка: деление на ноль"
+    return a / b
+
+def calculate(expression):
+    # Шаг 1: Обработка умножения и деления
+    while "*" in expression or "/" in expression:
+        tokens = expression.split()
+        for i in range(len(tokens)):
+            if tokens[i] == "*":
+                result = mult(int(tokens[i - 1]), int(tokens[i + 1]))
+                tokens = tokens[:i-1] + [str(result)] + tokens[i+2:]
+                break
+            elif tokens[i] == "/":
+                result = div(int(tokens[i - 1]), int(tokens[i + 1]))
+                tokens = tokens[:i-1] + [str(result)] + tokens[i+2:]
+                break
+        expression = " ".join(tokens)
+
+    # Шаг 2: Обработка сложения и вычитания
+    while "+" in expression or "-" in expression:
+        tokens = expression.split()
+        for i in range(len(tokens)):
+            if tokens[i] == "+":
+                result = summa(int(tokens[i - 1]), int(tokens[i + 1]))
+                tokens = tokens[:i-1] + [str(result)] + tokens[i+2:]
+                break
+            elif tokens[i] == "-":
+                result = sub(int(tokens[i - 1]), int(tokens[i + 1]))
+                tokens = tokens[:i-1] + [str(result)] + tokens[i+2:]
+                break
+        expression = " ".join(tokens)
+
+    return expression
+
+# Пример работы
+user_input = input("Введите выражение (разделяйте пробелами, например, '2 + 3 * 4 - 5'): ")
+print("Результат:", calculate(user_input))
+
+
 
 
 
