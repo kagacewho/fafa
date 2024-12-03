@@ -62,6 +62,62 @@ else:
     print('Неправильный ввод')
 
 
+def mult(a, b):
+    return a * b
+
+def summa(a, b):
+    return a + b
+
+def sub(a, b):
+    return a - b 
+
+def div(a, b):
+    if b == 0:
+        return "Ошибка: деление на ноль"
+    return a / b
+
+def separate(expression: str):
+    operators = "+-*/"
+    numbers = []
+    operations = []
+    temp = ""
+
+    for char in expression:
+        if char in operators:
+            numbers.append(int(temp))
+            operations.append(char)
+            temp = ""
+        else:
+            temp += char
+
+    numbers.append(int(temp))  # Добавляем последнее число
+    return numbers, operations
+
+def calculate(numbers, operations):
+    result = numbers[0]
+
+    for i, operator in enumerate(operations):
+        if operator == "+":
+            result = summa(result, numbers[i + 1])
+        elif operator == "-":
+            result = sub(result, numbers[i + 1])
+        elif operator == "*":
+            result = mult(result, numbers[i + 1])
+        elif operator == "/":
+            result = div(result, numbers[i + 1])
+            if result == "Ошибка: деление на ноль":
+                return result
+
+    return result
+
+user_input = input('Введите выражение (например, "2+3*4-5"): ')
+
+try:
+    numbers, operations = separate(user_input)
+    result = calculate(numbers, operations)
+    print(f"Результат: {result}")
+except ValueError:
+    print("Неправильный ввод")
 
 
 
